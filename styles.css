@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;600&display=swap');
+
 :root {
-    --primary-color: rgb(232 111 55);
-    --secondary-color: rgb(77 160 255);
+    --primary-color: #FF671D;
+    --secondary-yellow: #FFED23;
+    --secondary-green: #04BC4C;
+    --secondary-blue: #2970FF;
+    --secondary-purple: #D444F1;
+    --support-amber: #FFAB29;
+    --support-light-green: #91D441;
+    --support-light-blue: #3FC6EB;
+    --support-indigo: #7D64FF;
+    --support-pink: #F35998;
+    --font-color: #333;
+    --info-background-color: #e8f4f8;
+    --info-border-color: #3FC6EB;
+    --info-color: #0c5460;
+    --success-background-color: #d4edda;
+    --success-border-color: #04BC4C;
+    --success-color: #155724;
 }
 
 * {
@@ -10,11 +27,11 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #f9f9fa;
     min-height: 100vh;
     padding: 20px;
-    color: #333;
+    color: var(--font-color);
 }
 
 .container {
@@ -33,6 +50,8 @@ header {
 }
 
 header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 2em;
     margin-bottom: 15px;
 }
@@ -58,10 +77,12 @@ header h1 {
 
 .btn-primary {
     background: var(--primary-color);
+    color: white;
 }
 
 .btn-secondary {
-    background: var(--secondary-color);
+    background: var(--secondary-blue);
+    color: white;
 }
 
 .main-content {
@@ -77,9 +98,11 @@ header h1 {
 }
 
 .calculator-section h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--font-color);
 }
 
 .summary-section {
@@ -90,9 +113,11 @@ header h1 {
 }
 
 .summary-section h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 1.5em;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--font-color);
 }
 
 .category-card {
@@ -120,8 +145,9 @@ header h1 {
 }
 
 .category-header h3 {
-    font-size: 1.2em;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
+    font-size: 1.2em;
 }
 
 .toggle-icon {
@@ -147,7 +173,7 @@ header h1 {
     padding: 15px;
     background: #f8f9fa;
     border-radius: 6px;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .price-option-header {
@@ -159,11 +185,11 @@ header h1 {
 
 .option-name {
     font-weight: 600;
-    color: #333;
+    color: var(--font-color);
 }
 
 .option-price {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: 700;
 }
 
@@ -199,8 +225,8 @@ header h1 {
 .option-controls input[type="text"].quantity-input:focus,
 .option-controls input[type="number"]:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 2px rgba(41, 112, 255, 0.1);
 }
 
 .option-controls input[type="radio"] {
@@ -217,15 +243,15 @@ header h1 {
 
 .pack-info {
     font-size: 0.8em;
-    color: var(--secondary-color);
+    color: var(--info-color);
     margin-top: 5px;
     font-style: italic;
 }
 
 .category-description {
     padding: 12px;
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
+    background: #fff8e6;
+    border-left: 4px solid var(--support-amber);
     border-radius: 4px;
     margin-bottom: 15px;
     font-size: 0.9em;
@@ -257,12 +283,12 @@ header h1 {
     background: white;
     border-radius: 6px;
     margin-bottom: 10px;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .summary-detail-item .category-name {
     font-weight: 600;
-    color: #333;
+    color: var(--font-color);
     margin-bottom: 5px;
 }
 
@@ -274,13 +300,13 @@ header h1 {
 }
 
 .summary-detail-item .option-cost {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: 600;
 }
 
 .btn-add-line {
     padding: 10px 20px;
-    background: linear-gradient(135deg, var(--secondary-color) 0%, #764ba2 100%);
+    background: var(--secondary-green);
     color: white;
     border: none;
     border-radius: 6px;
@@ -293,7 +319,7 @@ header h1 {
 
 .btn-add-line:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(4, 188, 76, 0.4);
 }
 
 .custom-lines-container {
@@ -307,7 +333,7 @@ header h1 {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 15px;
-    border-left: 4px solid var(--secondary-color);
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .custom-line-header {
@@ -330,13 +356,13 @@ header h1 {
 
 .line-name-input:focus {
     outline: none;
-    border-color: var(--secondary-color);
+    border-color: var(--secondary-blue);
 }
 
 .btn-remove-line {
     width: 32px;
     height: 32px;
-    background: #ff4757;
+    background: var(--support-pink);
     color: white;
     border: none;
     border-radius: 50%;
@@ -349,7 +375,7 @@ header h1 {
 }
 
 .btn-remove-line:hover {
-    background: #ee5a6f;
+    background: #ff6ba8;
     transform: scale(1.1);
 }
 
@@ -391,8 +417,8 @@ header h1 {
 .control-group input[type="number"]:focus,
 .control-group input[type="text"].quantity-input:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 2px rgba(41, 112, 255, 0.1);
 }
 
 .custom-line-summary {
@@ -408,17 +434,17 @@ header h1 {
 .custom-line-summary .line-total {
     margin-top: 5px;
     font-size: 1.05em;
-    color: #333;
+    color: var(--font-color);
 }
 
 .pricing-info {
-    background: #e8f4f8;
-    border-left: 4px solid #17a2b8;
+    background: var(--info-background-color);
+    border-left: 4px solid var(--info-border-color);
     padding: 12px;
     border-radius: 4px;
     margin-bottom: 15px;
     font-size: 0.9em;
-    color: #0c5460;
+    color: var(--info-color);
 }
 
 /* Recommendations Section */
@@ -429,9 +455,10 @@ header h1 {
 }
 
 .recommendations-header {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     font-size: 1.2em;
-    font-weight: 700;
-    color: #333;
+    color: var(--font-color);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -470,21 +497,21 @@ header h1 {
 }
 
 .recommendation-warning {
-    background: #fff3cd;
-    border-left-color: #ffc107;
+    background: #fff8e6;
+    border-left-color: var(--support-amber);
     color: #856404;
 }
 
 .recommendation-info {
-    background: #d1ecf1;
-    border-left-color: #17a2b8;
-    color: #0c5460;
+    background: var(--info-background-color);
+    border-left-color: var(--info-border-color);
+    color: var(--info-color);
 }
 
 .recommendation-success {
-    background: #d4edda;
-    border-left-color: #28a745;
-    color: #155724;
+    background: var(--success-background-color);
+    border-left-color: var(--success-border-color);
+    color: var(--success-color);
 }
 
 .recommendation-header {

@@ -1,4 +1,5 @@
-{
+// Pricing data for Grafana Cloud Calculator
+const PRICING_DATA = {
     "Visualization": {
         "unit": "Per monthly active user",
         "description": "Only one model is possible for the whole organization.",
@@ -130,4 +131,4 @@
             }
         ]
     }
-}
+};

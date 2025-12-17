@@ -57,6 +57,21 @@ const RECOMMENDATION_RULES = [
         ]
     },
     {
+        id: 'too-many-irm',
+        type: 'error',
+        icon: '⛔',
+        condition: (state) => {
+            const irmUsers = state['IRM']?.options?.[0]?.quantity;
+            const vizUsers = state['Visualization']?.options?.find(o => o.selected)?.quantity;
+            return  irmUsers > vizUsers;
+        },
+        message: () => 'More IRM users than Visualization users',
+        suggestions: [
+            'Although it is possible, it is unlikely to happen',
+            'Verify your IRM and Visualization users assumptions'
+        ]
+    },
+    {
         id: 'kubernetes-without-logs',
         type: 'info',
         icon: 'ℹ️',
@@ -116,14 +131,10 @@ function parseFormattedNumber(str) {
 }
 
 // Load pricing data
-async function loadPricingData() {
-    try {
-        const response = await fetch('pricing.json');
-        pricingData = await response.json();
-        initializeCalculator();
-    } catch (error) {
-        console.error('Error loading pricing data:', error);
-    }
+function loadPricingData() {
+    // Pricing data is now loaded from pricing.js
+    pricingData = PRICING_DATA;
+    initializeCalculator();
 }
 
 // Initialize calculator state
@@ -142,17 +153,12 @@ function initializeCalculator() {
             return;
         }
 
-        // Skip categories without options
-        if (!categoryData.options || categoryData.options.length === 0) {
-            return;
-        }
-
         calculatorState[category] = {
             collapsed: true,
             options: []
         };
 
-        categoryData.options.forEach((option, optionIndex) => {
+        categoryData.options?.forEach((option, optionIndex) => {
             calculatorState[category].options.push({
                 quantity: 0,
                 selected: optionIndex === 0 // Default first option for exclusive groups
@@ -179,10 +185,7 @@ function renderCalculator() {
             return;
         }
 
-        // Skip categories without options
-        if (!categoryData.options || categoryData.options.length === 0) {
-            return;
-        }
+        
 
         const categoryCard = createCategoryCard(category, categoryData);
         container.appendChild(categoryCard);
@@ -238,14 +241,14 @@ function createCategoryCard(category, categoryData) {
 
     // Handle exclusive options (radio buttons)
     if (categoryData.optionsExclusive && categoryData.options.length > 1) {
-        categoryData.options.forEach((option, optionIndex) => {
+        categoryData.options?.forEach((option, optionIndex) => {
             const optionElement = createExclusiveOption(category, categoryData, option, optionIndex);
             content.appendChild(optionElement);
         });
     }
     // Handle non-exclusive options or single option
     else {
-        categoryData.options.forEach((option, optionIndex) => {
+        categoryData.options?.forEach((option, optionIndex) => {
             const optionElement = createNonExclusiveOption(category, categoryData, option, optionIndex);
             content.appendChild(optionElement);
         });
@@ -810,6 +813,8 @@ document.getElementById('loadBtn').addEventListener('click', () => {
 document.getElementById('fileInput').addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         loadConfiguration(e.target.files[0]);
+        // Reset the input so the same file can be loaded again
+        e.target.value = '';
     }
 });
 

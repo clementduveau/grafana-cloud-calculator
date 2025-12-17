@@ -224,18 +224,6 @@ condition: (state) => hasHighVolumeMetrics(state) && !hasHighResolution(state)
 
 ---
 
-## 🎓 Educational Aspect
-
-The recommendations serve as:
-1. **Guidance**: Help users make informed decisions
-2. **Education**: Teach best practices
-3. **Cost Optimization**: Point out expensive configurations
-4. **Validation**: Confirm sensible setups
-
-This turns the calculator from a passive tool into an **active advisor**.
-
----
-
 ## 🚀 Future Enhancements (Not Implemented)
 
 These could be added easily with the same architecture:
@@ -259,26 +247,3 @@ These could be added easily with the same architecture:
 5. **Rule Learning**:
    - Track which recommendations users dismiss
    - Adjust rule thresholds based on feedback
-
----
-
-## 📝 Code Statistics
-
-- **Lines of Code Added**: ~200
-- **New Functions**: 3
-  - `evaluateRecommendations()`
-  - `displayRecommendations()`
-  - `hasData()`
-- **New CSS Classes**: 12
-- **Dependencies Added**: 0 (pure vanilla JS)
-- **Performance Impact**: Negligible (<1ms per evaluation)
-
----
-
-## ✨ Summary
-
-Both features enhance the user experience significantly:
-- **Data protection** prevents frustrating data loss
-- **Smart recommendations** make the tool more helpful and educational
-
-The simple rule-based architecture means anyone on the team can add new recommendations without touching complex code.
