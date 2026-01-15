@@ -44,7 +44,7 @@ body {
 }
 
 header {
-    background: #000;
+    background: #0b0b0b;
     padding: 30px;
     color: white;
 }
@@ -76,13 +76,14 @@ header h1 {
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: var(--secondary-blue);
     color: white;
 }
 
 .btn-secondary {
-    background: var(--secondary-blue);
-    color: white;
+    background: transparent;
+    border: var(--secondary-blue) 2px solid;
+    color: var(--secondary-blue);
 }
 
 .main-content {

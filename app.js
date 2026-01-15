@@ -1,10 +1,26 @@
-// Pricing data
+// =============================================================================
+// STATE VARIABLES - All global state variables
+// =============================================================================
+
 let pricingData = {};
 let calculatorState = {};
 let hasUnsavedChanges = false;
 
 // =============================================================================
-// RULES ENGINE - Simple declarative recommendation system
+// HTML ELEMENTS
+// =============================================================================
+
+const pricingCategoriesElement = document.getElementById('pricingCategories');
+const totalPriceElement = document.getElementById('totalPrice');
+const summaryDetailsElementElement = document.getElementById('summaryDetails');
+const recommendationsContainerElement = document.getElementById('recommendationsContainer');
+const summaryDetailsElement = document.getElementById('summaryDetails');
+const saveBtnElement = document.getElementById('saveBtn');
+const loadBtnElement = document.getElementById('loadBtn');
+const fileInputElement = document.getElementById('fileInput');
+
+// =============================================================================
+// RULES ENGINE - Declarative recommendation system
 // =============================================================================
 
 const RECOMMENDATION_RULES = [
@@ -130,50 +146,57 @@ function parseFormattedNumber(str) {
     return isNaN(num) ? 0 : num;
 }
 
+// =============================================================================
+// LOADING AND RENDERING
+// =============================================================================
+
 // Load pricing data
 function loadPricingData() {
-    // Pricing data is now loaded from pricing.js
-    pricingData = PRICING_DATA;
-    initializeCalculator();
-}
-
-// Initialize calculator state
-function initializeCalculator() {
-    calculatorState = {};
-
-    Object.keys(pricingData).forEach(category => {
-        const categoryData = pricingData[category];
-
-        // Handle custom line items (like Logs)
-        if (categoryData.customLineItems) {
+    fetch('pricing.json')
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to load pricing data.');
+        return response.json();
+    })
+    .then(data => {
+        pricingData = data;
+        calculatorState = {};
+        
+        Object.keys(pricingData).forEach(category => {
+            const categoryData = pricingData[category];
+        
+            // Handle custom line items (like Logs)
+            if (categoryData.customLineItems) {
+                calculatorState[category] = {
+                    collapsed: true,
+                    customLines: []
+                };
+                return;
+            }
+        
             calculatorState[category] = {
                 collapsed: true,
-                customLines: []
+                options: []
             };
-            return;
-        }
-
-        calculatorState[category] = {
-            collapsed: true,
-            options: []
-        };
-
-        categoryData.options?.forEach((option, optionIndex) => {
-            calculatorState[category].options.push({
-                quantity: 0,
-                selected: optionIndex === 0 // Default first option for exclusive groups
+        
+            categoryData.options?.forEach((option, optionIndex) => {
+                calculatorState[category].options.push({
+                    quantity: 0,
+                    selected: optionIndex === 0 // Default first option for exclusive groups
+                });
             });
         });
+        
+        renderCalculator();
+        updateSummary();
+    })
+    .catch(error => {
+        console.error(error);
     });
-
-    renderCalculator();
-    updateSummary();
 }
 
 // Render the calculator UI
 function renderCalculator() {
-    const container = document.getElementById('pricingCategories');
-    container.innerHTML = '';
+    pricingCategoriesElement.innerHTML = '';
 
     Object.keys(pricingData).forEach(category => {
         const categoryData = pricingData[category];
@@ -181,14 +204,12 @@ function renderCalculator() {
         // Handle custom line items
         if (categoryData.customLineItems) {
             const categoryCard = createCustomLineItemCard(category, categoryData);
-            container.appendChild(categoryCard);
+            pricingCategoriesElement.appendChild(categoryCard);
             return;
         }
 
-        
-
         const categoryCard = createCategoryCard(category, categoryData);
-        container.appendChild(categoryCard);
+        pricingCategoriesElement.appendChild(categoryCard);
     });
 }
 
@@ -595,12 +616,10 @@ function updateSummary() {
                     categoryCost += cost;
 
                     // Calculate actual billable quantity for display
-                    let billableQuantity = quantity;
                     let quantityDisplay = formatNumber(quantity);
 
                     if (option.pack) {
                         const numPacks = Math.ceil(quantity / option.pack);
-                        billableQuantity = numPacks;
                         quantityDisplay = `${formatNumber(quantity)} (${formatNumber(numPacks)} pack${numPacks > 1 ? 's' : ''} of ${formatNumber(option.pack)})`;
                     }
 
@@ -628,14 +647,13 @@ function updateSummary() {
     });
 
     // Update total
-    document.getElementById('totalPrice').textContent = formatCurrency(totalCost);
+    totalPriceElement.textContent = formatCurrency(totalCost);
 
     // Update details
-    const summaryDetails = document.getElementById('summaryDetails');
-    summaryDetails.innerHTML = '';
+    summaryDetailsElement.innerHTML = '';
 
     if (details.length === 0) {
-        summaryDetails.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No services configured yet</p>';
+        summaryDetailsElement.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">No services configured yet</p>';
     } else {
         details.forEach(detail => {
             const detailCard = document.createElement('div');
@@ -666,7 +684,7 @@ function updateSummary() {
                 ${itemsHtml}
             `;
 
-            summaryDetails.appendChild(detailCard);
+            summaryDetailsElement.appendChild(detailCard);
         });
     }
 
@@ -678,17 +696,8 @@ function updateSummary() {
 function displayRecommendations(state, totalCost) {
     const recommendations = evaluateRecommendations(state, totalCost);
 
-    // Find or create recommendations container
-    let recommendationsContainer = document.getElementById('recommendationsContainer');
-    if (!recommendationsContainer) {
-        recommendationsContainer = document.createElement('div');
-        recommendationsContainer.id = 'recommendationsContainer';
-        recommendationsContainer.className = 'recommendations-section';
-        document.getElementById('summaryContent').appendChild(recommendationsContainer);
-    }
-
     // Clear previous recommendations
-    recommendationsContainer.innerHTML = '';
+    recommendationsContainerElement.innerHTML = '';
 
     if (recommendations.length === 0) return;
 
@@ -696,7 +705,7 @@ function displayRecommendations(state, totalCost) {
     const header = document.createElement('h3');
     header.className = 'recommendations-header';
     header.textContent = 'Recommendations';
-    recommendationsContainer.appendChild(header);
+    recommendationsContainerElement.appendChild(header);
 
     // Add each recommendation
     recommendations.forEach(rec => {
@@ -720,7 +729,7 @@ function displayRecommendations(state, totalCost) {
             ${suggestionsHtml}
         `;
 
-        recommendationsContainer.appendChild(card);
+        recommendationsContainerElement.appendChild(card);
     });
 }
 
@@ -730,27 +739,25 @@ function displayRecommendations(state, totalCost) {
 
 // Check if there's any meaningful data
 function hasData() {
-    let totalCost = 0;
-
     Object.keys(calculatorState).forEach(category => {
         const state = calculatorState[category];
 
         // Check custom lines
         if (state.customLines) {
             state.customLines.forEach(line => {
-                if (line.ingestion > 0) totalCost += line.ingestion;
+                if (line.ingestion > 0) return true;
             });
         }
 
         // Check options
         if (state.options) {
             state.options.forEach(option => {
-                if (option.quantity > 0) totalCost += option.quantity;
+                if (option.quantity > 0) return true;
             });
         }
     });
 
-    return totalCost > 0;
+    return false;
 }
 
 // Warn user before leaving if there's data
@@ -759,6 +766,24 @@ window.addEventListener('beforeunload', (e) => {
         e.preventDefault();
         e.returnValue = ''; // Modern browsers require this
         return ''; // Some older browsers
+    }
+});
+
+// =============================================================================
+// SAVE / LOAD CONFIGURATION
+// =============================================================================
+
+saveBtnElement.addEventListener('click', saveConfiguration);
+
+loadBtnElement.addEventListener('click', () => {
+    fileInputElement.click();
+});
+
+fileInputElement.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        loadConfiguration(e.target.files[0]);
+        // Reset the input so the same file can be loaded again
+        e.target.value = '';
     }
 });
 
@@ -803,20 +828,9 @@ function loadConfiguration(file) {
     reader.readAsText(file);
 }
 
+// =============================================================================
+// MAIN INITIALIZATION
+// =============================================================================
+
 // Event listeners
-document.getElementById('saveBtn').addEventListener('click', saveConfiguration);
-
-document.getElementById('loadBtn').addEventListener('click', () => {
-    document.getElementById('fileInput').click();
-});
-
-document.getElementById('fileInput').addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-        loadConfiguration(e.target.files[0]);
-        // Reset the input so the same file can be loaded again
-        e.target.value = '';
-    }
-});
-
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', loadPricingData);

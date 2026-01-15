@@ -18,14 +18,6 @@
         ],
         "optionsExclusive": true
     },
-    "IRM": {
-        "unit": "Per monthly active user",
-        "options": [
-            {
-                "price": 20
-            }
-        ]
-    },
     "Metrics": {
         "unit": "Per 1,000 billable series",
         "description": "By default, choose low resolution.",
@@ -74,6 +66,14 @@
             }
         ]
     },
+    "IRM": {
+        "unit": "Per monthly active user",
+        "options": [
+            {
+                "price": 20
+            }
+        ]
+    },
     "Frontend Observability": {
         "unit": "Per 1,000 sessions",
         "options": [
@@ -84,8 +84,8 @@
         ]
     },
     "Application Observability": {
-        "unit": "Per host hour",
-        "description": "The price is per host-hour. To simplify, this calculator considers 730h/month.",
+        "unit": "Per host / month",
+        "description": "The SKU is per host-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
                 "price": 29.2
@@ -93,8 +93,8 @@
         ]
     },
     "Kubernetes Monitoring - Host": {
-        "unit": "Per host hour",
-        "description": "The price is per host-hour. To simplify, this calculator considers 730h/month.",
+        "unit": "Per host / month",
+        "description": "The SKU is per host-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
                 "price": 10.95
@@ -102,8 +102,8 @@
         ]
     },
     "Kubernetes Monitoring - Container": {
-        "unit": "Per container hour",
-        "description": "The price is per container-hour. To simplify, this calculator considers 730h/month.",
+        "unit": "Per container / month",
+        "description": "The SKU is per container-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
                 "price": 0.73
