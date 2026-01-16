@@ -85,6 +85,20 @@ const RECOMMENDATION_RULES = [
             'Kubernetes monitoring typically requires logs to provide better results',
             'Consider adding Logs service for complete observability'
         ]
+    },
+    {
+        id: 'non-standard-logs-retention',
+        type: 'info',
+        icon: 'ℹ️',
+        condition: (state) => {
+            return (state['Logs']?.options[1].quantity > 0 || state['Logs']?.options[2].quantity > 0);
+        },
+        message: () => 'Enterprise agreements are required for logs retention beyond 30 days',
+        suggestions: [
+            'You have selected logs retention periods beyond 30 days.',
+            'You need an Enterprise agreement to proceed with these retention periods.',
+            'Contact a Grafana sales representative for more information.'
+        ]
     }
 ];
 

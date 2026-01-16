@@ -47,7 +47,7 @@
     },
     "Logs": {
         "unit": "per GB ingested",
-        "description": "Quantity of logs stored in Grafana Cloud, per retention period. You can mix retention periods.",
+        "description": "Quantity of logs stored in Grafana Cloud, per retention period. Retentions higher than 30 days are limited to Enterprise agreements.",
         "options": [
             {
                 "name": "30 days retention",
