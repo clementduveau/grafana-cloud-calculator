@@ -1,6 +1,6 @@
 {
     "Visualization": {
-        "unit": "Per monthly active user",
+        "unit": "per monthly active user",
         "description": "Only one model is possible for the whole organization.",
         "options": [
             {
@@ -18,8 +18,18 @@
         ],
         "optionsExclusive": true
     },
+    "Grafana Assistant": {
+        "unit": "per monthly active user",
+        "description": "Users using Grafana Assistant in Grafana Cloud during the month.",
+        "options": [
+            {
+                "name": "Grafana Assistant active user",
+                "price": 20
+            }
+        ]
+    },
     "Metrics": {
-        "unit": "Per 1,000 billable series",
+        "unit": "per 1,000 billable series",
         "description": "By default, choose low resolution.",
         "options": [
             {
@@ -36,14 +46,25 @@
         "optionsExclusive": true
     },
     "Logs": {
-        "unit": "Per GB ingested",
-        "description": "Ingestion and retention costs are calculated separately. Retention is charged per month.",
-        "customLineItems": true,
-        "ingestPrice": 0.40,
-        "retentionPrice": 0.10
+        "unit": "per GB ingested",
+        "description": "Quantity of logs stored in Grafana Cloud, per retention period. You can mix retention periods.",
+        "options": [
+            {
+                "name": "30 days retention",
+                "price": 0.5
+            },
+            {
+                "name": "60 days retention",
+                "price": 0.6
+            },
+            {
+                "name": "90 days retention",
+                "price": 0.7
+            }
+        ]
     },
     "Traces": {
-        "unit": "Per GB ingested",
+        "unit": "per GB ingested",
         "options": [
             {
                 "price": 0.50
@@ -51,7 +72,7 @@
         ]
     },
     "Profiles": {
-        "unit": "Per GB ingested",
+        "unit": "per GB ingested",
         "options": [
             {
                 "price": 0.50
@@ -59,7 +80,7 @@
         ]
     },
     "k6": {
-        "unit": "Per virtual user hour",
+        "unit": "per virtual user hour",
         "options": [
             {
                 "price": 0.15
@@ -67,7 +88,7 @@
         ]
     },
     "IRM": {
-        "unit": "Per monthly active user",
+        "unit": "per monthly active user",
         "options": [
             {
                 "price": 20
@@ -75,7 +96,7 @@
         ]
     },
     "Frontend Observability": {
-        "unit": "Per 1,000 sessions",
+        "unit": "per 1,000 sessions",
         "options": [
             {
                 "price": 0.90,
@@ -84,7 +105,7 @@
         ]
     },
     "Application Observability": {
-        "unit": "Per host / month",
+        "unit": "per host / month",
         "description": "The SKU is per host-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
@@ -93,7 +114,7 @@
         ]
     },
     "Kubernetes Monitoring - Host": {
-        "unit": "Per host / month",
+        "unit": "per host / month",
         "description": "The SKU is per host-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
@@ -102,7 +123,7 @@
         ]
     },
     "Kubernetes Monitoring - Container": {
-        "unit": "Per container / month",
+        "unit": "per container / month",
         "description": "The SKU is per container-hour. To simplify, this calculator considers 730h/month.",
         "options": [
             {
@@ -111,7 +132,7 @@
         ]
     },
     "Synthetics - API Testing": {
-        "unit": "Per 10,000 test executions",
+        "unit": "per 10,000 test executions",
         "options": [
             {
                 "name": "API Testing",
@@ -121,7 +142,7 @@
         ]
     },
     "Synthetics - Browser Testing": {
-        "unit": "Per 10,000 test executions",
+        "unit": "per 10,000 test executions",
         "options": [
             {
                 "name": "Browser Testing",
